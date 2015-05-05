@@ -1,0 +1,72 @@
+<openerp>
+	<data>
+		<!-- session tree/list view -->
+        <record model="ir.ui.view" id="session_tree_view">
+            <field name="name">session.tree</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <tree string="Session Tree" colors="blue:duration&lt;5;red:duration&gt;15">
+                    <field name="name"/>
+                    <field name="course_id"/>
+                    <field name="phone"/>
+                    <field name="taken_seats" widget="progressbar"/>
+                    <field name="duration" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+		<!-- session -->
+        <record model="ir.ui.view" id="session_form_view">
+            <field name="name">session.form</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <form string="Session Form">
+                    <sheet>
+                         <group string="General">
+                             <field name="course_id"/>
+                             <field name="name"/>
+                             <field name="country_id"/>
+                             <field name="instructor_id" domain="[('country_id', '=', country_id)]"/>
+                             <field name="active"/>
+                             <field name="couleur"/>
+                         </group>
+                         <group string="Schedule">
+                             <field name="start_date"/>
+                             <field name="duration"/>
+                             <field name="end_date"/>
+                             <field name="seats"/>
+                             <field name="taken_seats" widget="progressbar"/>
+                         </group>
+                         <label for="attendee_ids"/>
+                         <field name="attendee_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Search -->
+        <record model="ir.ui.view" id="session_search_view">
+            <field name="name">session.search</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="instructor_id"/>
+                    <field name="attendee_ids"/>
+                    <field name="course_id"/>
+                    
+                    <group string="Group By">
+                        <filter name="by_instructor" string="Instructor"
+                                context="{'group_by': 'instructor_id'}"/>
+                        <filter name="by_start_date" string="Start date"
+                                context="{'group_by': 'start_date'}"/>        
+                    </group>
+                    <filter name="last_year" string="Last year"
+                            domain="[('start_date', '&gt;=', (context_today() - datetime.timedelta(days=365)).strftime('%Y-%m-%d'))]"/>
+                </search>
+            </field>
+        </record>
+        
+        
+   </data>
+</openerp>
