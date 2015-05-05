@@ -83,6 +83,13 @@ class Session(models.Model):
     hours = fields.Float(string="Duration in hours",
                          compute='_get_hours', inverse='_set_hours')
     nbr_attendees = fields.Integer(compute='_get_nbr_attendees', store=True)
+    attendees_count = fields.Integer(string="Attendees count", compute='_get_attendees_count', store=True)
+    
+    
+    @api.one
+    @api.depends('attendee_ids')
+    def _get_attendees_count(self):
+        self.attendees_count = len(self.attendee_ids)
     
     @api.one
     @api.depends('attendee_ids')
