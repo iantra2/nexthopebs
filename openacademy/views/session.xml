@@ -115,6 +115,15 @@
             </field>
         </record>
         
-        
+        <!-- Calendar chrisraz12000 -->
+        <record model="ir.ui.view" id="session_calendar_view">
+            <field name="name">session.calendar</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <calendar string="Session Calendar" date_start="start_date" date_stop="end_date" color="instructor_id">
+                    <field name="name"/>
+                </calendar>
+            </field>
+        </record>        
    </data>
 </openerp>
